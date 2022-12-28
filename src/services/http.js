@@ -50,32 +50,11 @@ export default class Http {
             // window.location = `/404`;
             break;
           case 401:
-            return stores.authStore
-              .refreshToken()
-              .then((res) => {
-                stores.authStore.setTokens(res);
-                originalRequest.headers['Authorization'] = `Bearer ${res.access_token}`;
-                return axios.request(originalRequest);
-              })
-              .catch((err) => Promise.reject(err));
+            stores.errorStore.setError('Your token is expired now. Please login again!');
+            window.location = '/login';
+            return Promise.reject(error);
           case 400:
-            if (error.response.data.error_description === 'ERROR_DUPLICATE_TEMPLATE_NAME') {
-              stores.errorStore.setError('Template already exist with this name . Please use another name.  ');
-            }
-            if (error.response.data.error_description === 'ERROR_DUPLICATE_EMAIL_WITH_OTHER_USER') {
-              stores.errorStore.setError('Email has been used by other users. Please put another email address.');
-            }
-            if (error.response.data.error_description === 'ERROR_DUPLICATE_USER_FOUND') {
-              stores.errorStore.setError('Login id has been used by other users. Please use another login id.')
-            }
-            if (includes(originalRequest.url, isBrowser ? window.__ENV.REACT_APP_PIDS_REFRESH_PATH : window.__ENV.REACT_APP_PIDS_REFRESH_PATH_MOBILE)) {
-              sessionStorage.setItem('REDIRECT', window.location.pathname);
-              window.location = '/login';
-            } else {
-              return Promise.reject(error);
-            }
-
-            break;
+            return Promise.reject(error);
           case 403:
             sessionStorage.setItem('REDIRECT', window.location.pathname);
             // localStorage.removeItem(`${APP_NAME}_TOKENS`);
@@ -112,22 +91,13 @@ export default class Http {
     return tokens.accessToken;
   };
 
-  getRefreshToken = () => {
-    if (!this.getAuthTokens()) {
-      return null;
-    }
-
-    const tokens = JSON.parse(this.getAuthTokens());
-    return tokens.refreshToken || null;
-  };
-
   setTokens = (tokens) => {
     localStorage.setItem(TOKENS_KEY, JSON.stringify(tokens));
   };
 
   removeTokens = () => {
     // localStorage.removeItem(TOKENS_KEY);
-    localStorage.removeItem(`${isBrowser ? window.__ENV.REACT_APP_APP_NAME : window.__ENV.REACT_APP_APP_NAME_MOBILE}_IS_PASSWORD_EXPIRED`);
+    localStorage.removeItem('TOKENS');
   };
 
   authenticatedHeader = () => {
@@ -138,8 +108,10 @@ export default class Http {
   };
 
   get = (url, payload = {}, options) => {
+    
     const authenticatedHeader = this.authenticatedHeader();
     const config = Object.assign({ params: payload }, headers(authenticatedHeader), options);
+    console.log(url,payload,config)
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .get(url, config)

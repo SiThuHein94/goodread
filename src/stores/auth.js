@@ -5,11 +5,9 @@ import axios from 'axios';
 class AuthStore {
   constructor(props) {
     this.api = props.api;
-    this.CancelToken = axios.CancelToken;
-    this.source = false;
     makeAutoObservable(this)
   }
-
+  
   login = (payload) => {
     return new Promise((resolve, reject) => {
       this.api
@@ -26,48 +24,17 @@ class AuthStore {
   setTokens = (data) =>
     this.api.http.setTokens({
       accessToken: data.access_token,
-      refreshToken: data.refresh_token,
     });
 
-  forgotPassword = (payload) => {
-    return new Promise((resolve, reject) => {
-      this.api
-        .forgotPassword(payload)
-        .then((res) => {
-          resolve(res);
-        })
-        .catch((err) => reject(err.response));
-    });
-  };
-
-  refreshToken = () => {
-    return new Promise((resolve, reject) => {
-      this.api
-        .refreshToken({ refresh_token: this.getRefreshToken() })
-        .then((res) => {
-          this.source = false;
-          resolve(res);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-      // if (!this.source) {
-      //   this.source = true;
-      // } else {
-      //   // reject({ response: { message: 'Refresh token' } });
-      //   resolve();
-      // }
-    });
-  };
-
-  setIfPasswordExpired = () => {};
+  setIfPasswordExpired = () => { };
 
   logout = () => {
     this.api.logout();
   };
 
   getAccessToken = () => this.api.getAccessToken();
-  getRefreshToken = () => this.api.getRefreshToken();
+
+  getAllBooks = () => this.api.getAllBooks();
 
   // checkIfPasswordExpired = () => {
   //   const status = this.api.getPasswordExpiryStatus();

@@ -1,4 +1,3 @@
-import { isBrowser } from 'react-device-detect'
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 
@@ -14,19 +13,10 @@ export default class AuthServices {
     });
   }
 
-  login = (payload) => axios.post(`http://localhost:9999/login`, payload);
+  login = (payload) => axios.post(`https://a6f0-103-94-71-36.in.ngrok.io/login`, payload);
 
-  forgotPassword = (payload) =>
-    axios.post(`${isBrowser ? window.__ENV.REACT_APP_UAC_SERVER : window.__ENV.REACT_APP_UAC_SERVER_MOBILE}/uac/reset-my-forget-password-with-userid`, payload);
-
-  refreshToken = (payload) => this.http.post(`/refresh`, payload);
-
-  logout = () => this.http.removeTokens();
   getAccessToken = () => this.http.getAccessToken();
-  getRefreshToken = () => this.http.getRefreshToken();
 
-  setPasswordExpiryStatus = (value) =>
-    localStorage.setItem(`${isBrowser ? window.__ENV.REACT_APP_APP_NAME : window.__ENV.REACT_APP_APP_NAME_MOBILE}_IS_PASSWORD_EXPIRED`, value);
+  getAllBooks = () => this.http.get(`https://a6f0-103-94-71-36.in.ngrok.io/all-books`);
 
-  getPasswordExpiryStatus = () => localStorage.getItem(`${isBrowser ? window.__ENV.REACT_APP_APP_NAME : window.__ENV.REACT_APP_APP_NAME_MOBILE}_IS_PASSWORD_EXPIRED`);
 }

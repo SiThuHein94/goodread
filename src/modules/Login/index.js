@@ -6,7 +6,6 @@ import Input from 'components/common/Form/Input';
 import Loading from 'components/common/Loading';
 import useToggle from 'hooks/useToggle';
 import { useNavigate } from 'react-router-dom';
-import ErrorModal from "components/Modals/ErrorModal"
 import FormResponseError from 'components/common/Form/FormResponseError'
 
 const SideIcon = ({ action }) => (
@@ -22,13 +21,7 @@ const Login = ({ authStore }) => {
   const methods = useForm();
   const { handleSubmit } = methods;
   const { toggle, handleToggle } = useToggle({
-    requestResetModal: false,
-    confirmationModal: false,
-    accountLockedModal: false,
-    accountSuspendedModal: false,
     showPassword: false,
-    accountRevokedModal: false,
-    errorModal: false,
   });
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -56,19 +49,10 @@ const Login = ({ authStore }) => {
           methods.setError('username', { message: ' ' });
           methods.setError('password', { message: ' ' });
 
-        } else if (err?.status === 500) {
-          setErrors([{ error_description: err.data.error_description }]);
-          handleToggle({ errorModal: true });
-        } else {
-          setErrors([{ error_description: 'Please check your internet connection.' }]);
-          handleToggle({ errorModal: true });
         }
       });
   };
-  const handleCloseErrorModal = React.useCallback(() => {
-    handleToggle({ errorModal: false });
-    setErrors([]);
-  }, [handleToggle]);
+
   return (
     <>
       <div className="flex h-screen">
@@ -114,9 +98,7 @@ const Login = ({ authStore }) => {
           </div>
         </div>
       </div>
-      {toggle.errorModal && (
-        <ErrorModal description={errors.error} onToggle={handleCloseErrorModal} />
-      )}
+
       {isLoading && <Loading />}
     </>
   );

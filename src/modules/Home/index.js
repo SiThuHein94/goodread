@@ -1,12 +1,16 @@
+import { inject } from "mobx-react"
+import { useEffect } from "react"
 
-export default () => (
-    <div>
-      <h1>This is the Home Page</h1>
-      <h1>This is the Home Page</h1>
-      <h1>This is the Home Page</h1>
-      <h1>This is the Home Page</h1>
-      <h1>This is the Home Page</h1>
-      <h1>This is the Home Page</h1>
-      <h1>This is the Home Page</h1>
-    </div>
-  );
+const Home = (props) => {
+  console.log(props)
+  const { getAllBooks } = props.authStore;
+  useEffect(() => {
+    getAllBooks().then(
+      data=>console.log(data)
+    )
+  }, [])
+  return (
+    <div>HOme</div>
+  )
+}
+export default inject(({ authStore }) => ({ authStore }))(Home);
