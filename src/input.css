@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.form-group input{
+    display: inline-block;
+    text-align: center;
+    border-color: rgb(204, 203, 203);
+    --text-opacity: 1;
+    border-radius: 0.50rem;
+    width: 100%;
+}
+
+.form-group .side-icon {
+  position: relative;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+          align-items: center;
+          /* left: 500px; */
+  top:-30px;
+  --text-opacity: 1;
+  color: #DCDCDC;
+  color: rgba(220, 220, 220, var(--text-opacity));
+  right: -90%;
+  cursor: pointer;
+}
+.form-group .side-icon:hover {
+    --text-opacity: 1;
+    color: #A2A2A2;
+    color: rgba(162, 162, 162, var(--text-opacity));
+  }
+  
+  @layer components {
+    .text-danger {
+      color: #ff0000;
+    }
+  }
+
+  @layer components {
+    .card {
+      background-color: theme(colors.white);
+      border-radius: theme(borderRadius.lg);
+      padding: theme(spacing.6);
+      box-shadow: theme(boxShadow.xl);
+    }
+  }
+  
