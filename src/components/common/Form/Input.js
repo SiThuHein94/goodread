@@ -34,7 +34,7 @@ export default ({
     <>
       <Container plain={plain}>
         {label && (
-          <label htmlFor={id}>
+          <label className=' text-white' htmlFor={id}>
             {label} {rules.required && <sup>*</sup>}
           </label>
         )}

@@ -13,13 +13,16 @@ export default class AuthServices {
     });
   }
 
-  login = (payload) => axios.post(`http://localhost:9999/login`, payload);
+  // baseURL = 'http://localhost:9999'
+  baseURL = 'https://cfd7-103-94-68-42.ap.ngrok.io'
+  
+  login = (payload) => axios.post(`${this.baseURL}/login`, payload);
 
   getAccessToken = () => this.http.getAccessToken();
 
   logout = () => this.http.removeTokens();
 
-  getAllBooks = () => this.http.get(`http://localhost:9999/all-books`);
+  getAllBooks = () => this.http.get(`${this.baseURL}/all-books`);
   
 
 }

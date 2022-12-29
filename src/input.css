@@ -64,11 +64,42 @@
     }
   @layer components {
     .card {
-      background-color: #4a494914;
+      background-color: #173e8621;
       border-radius: theme(borderRadius.lg);
       padding: theme(spacing.6);
-      box-shadow: 9px 5px 7px -5px rgb(0 0 0 / 25%), 0px 0px 1px -6px rgb(0 0 0 / 0%);
+      /* box-shadow:1px 1px 10px gray; */
     }
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    /* background: rgb(36, 36, 36);  */
+    background: transparent;
+    border-radius: 10px;
+  
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(188, 188, 189); /*old color : #888*/
+    border-radius: 10px;
+  
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(0, 119, 255); 
+    border-radius: 10px;
+  }
+  
+  .scroll{
+    scrollbar-color: rgb(255,255,255,20%) transparent;
+    scrollbar-width: thin !important;
   }
 
   
