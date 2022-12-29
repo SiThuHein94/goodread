@@ -3,11 +3,14 @@
 import { Link } from "react-router-dom";
 import { Colors } from "assets/colors";
 import logo from "assets/images/logo2.png"
-export default function Navigation() {
+import { inject } from "mobx-react";
+const Navigation = (props) => {
+    const {logout} = props.authStore;
+    console.log(props)
     return (
 
-        <nav style={{ background: Colors.primary }} className='flex items-center justify-between bg-red-200 p-1 px-3 text-white'>
-            <img style={{ height: 60 }} src={logo}></img>
+        <nav style={{ background: Colors.primary, position:'fixed', top:0 , width:'100%', zIndex:10}} className='flex items-center justify-between bg-red-200 p-1 px-3 text-white'>
+            <img style={{ height: 60 }} src={logo}/>
             <div className="flex">
                 <Link className="flex" to="/home">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -27,8 +30,12 @@ export default function Navigation() {
                 </Link>
                 <Link to="contact">Contact Us</Link>
             </div>
-            <div>logout</div>
+            <div className="flex" style={{cursor:'pointer'}} onClick={()=>logout()}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+</svg>
+<span className="pl-1">logout</span></div>
         </nav>
 
     );
 }
+export default inject(({ authStore }) => ({ authStore }))(Navigation);

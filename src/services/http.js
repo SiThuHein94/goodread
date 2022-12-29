@@ -96,6 +96,7 @@ export default class Http {
   };
 
   removeTokens = () => {
+    console.log('here')
     // localStorage.removeItem(TOKENS_KEY);
     localStorage.removeItem('TOKENS');
   };

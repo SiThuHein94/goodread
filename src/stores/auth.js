@@ -1,6 +1,5 @@
 import { makeAutoObservable } from 'mobx';
 // import { getBooleanValue } from 'helpers';
-import axios from 'axios';
 
 class AuthStore {
   constructor(props) {
@@ -30,6 +29,7 @@ class AuthStore {
 
   logout = () => {
     this.api.logout();
+    window.location = '/login';
   };
 
   getAccessToken = () => this.api.getAccessToken();

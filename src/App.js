@@ -14,6 +14,7 @@ export default function App() {
   return (
     <Provider {...stores}>
         <Routes>
+        <Route path='/login' element={<Login />} />
         <Route path='/' element={<Login />} />
         <Route  element={<MainLayout />}>
           <Route path="/home"  element={<Home />} />

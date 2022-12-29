@@ -13,10 +13,13 @@ export default class AuthServices {
     });
   }
 
-  login = (payload) => axios.post(`https://a6f0-103-94-71-36.in.ngrok.io/login`, payload);
+  login = (payload) => axios.post(`http://localhost:9999/login`, payload);
 
   getAccessToken = () => this.http.getAccessToken();
 
-  getAllBooks = () => this.http.get(`https://a6f0-103-94-71-36.in.ngrok.io/all-books`);
+  logout = () => this.http.removeTokens();
+
+  getAllBooks = () => this.http.get(`http://localhost:9999/all-books`);
+  
 
 }
